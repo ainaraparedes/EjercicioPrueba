@@ -10,15 +10,21 @@ namespace ClasesEjercicioPrueba.Data1
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<Vehiculo> vehiculos { get; set; }
+        public DbSet<Empleado> empleados { get; set; }
+        public DbSet<Departamento> departamentos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                "Server=(localdb)\\MSSQLLocalDB;Database=PruebaEF;Trusted_Connection=True;TrustServerCertificate=True;"
+                "Server=localHost;Database=GestionEmpresa;Trusted_Connection=True;TrustServerCertificate=True;"
             );
         }
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Empleado>().ToTable("empleados");
+            modelBuilder.Entity<Departamento>().ToTable("departamento");
+            modelBuilder.Entity<Departamento>().HasKey(d => d.DepartamentoId);
+        }
 
 
     }
